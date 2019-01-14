@@ -1,0 +1,10 @@
+framework: netstandard2.0, netcoreapp2.1
+storage: none
+
+source https://api.nuget.org/v3/index.json
+  nuget FSharp.Core
+  nuget WebSharper
+  nuget WebSharper.AspNetCore
+  nuget WebSharper.UI
+  nuget WebSharper.FSharp
+  nuget Microsoft.AspNetCore.All <= 2.1
