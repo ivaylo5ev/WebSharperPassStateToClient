@@ -30,6 +30,18 @@ module ClientCode =
         override __.Doc _ =
             span [attr.``class`` "alert alart-info"] [ text "D" ]
 
+    [<JavaScriptExport>]
+    let fixType v =
+        match box v with
+        | :? C -> C() :> A
+        | :? D -> D() :> A
+        | _    -> C() :> A
+
+    [<JavaScriptExport>]
+    let fixMap (m:Map<string, A>) =
+        m |> Seq.map (fun kvp -> kvp.Key, fixType kvp.Value) |> Map
+
+
 [<JavaScript>]
 module Client =
 
@@ -46,4 +58,8 @@ module Client =
     let getDoc (docName : string) =
         _map.View.Map(fun m -> m.[docName].Doc(m))
         |> Doc.EmbedView
+
+    let getDoc2 (m:Map<string, ClientCode.A>) (docName : string) =
+        let m = ClientCode.fixMap m
+        m.[docName].Doc(m)
 

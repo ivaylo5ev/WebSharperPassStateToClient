@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WebSharperPassStateToClient", "WebSharperPassStateToClient.fsproj", "{6CD6399C-6F9D-4C4F-8848-BA1520C59B8F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CD6399C-6F9D-4C4F-8848-BA1520C59B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD6399C-6F9D-4C4F-8848-BA1520C59B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD6399C-6F9D-4C4F-8848-BA1520C59B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD6399C-6F9D-4C4F-8848-BA1520C59B8F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19E772E6-8E2B-4079-A050-D68287D8DA5A}
+	EndGlobalSection
+EndGlobal
