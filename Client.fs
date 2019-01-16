@@ -32,10 +32,11 @@ module ClientCode =
 
     [<JavaScriptExport>]
     let fixType v =
-        match box v with
-        | :? C -> C() :> A
-        | :? D -> D() :> A
-        | _    -> C() :> A
+        //match box v with
+        //| :? C -> C() :> A
+        //| :? D -> D() :> A
+        //| _    -> C() :> A
+        v
 
     [<JavaScriptExport>]
     let fixMap (m:Map<string, A>) =
@@ -45,21 +46,21 @@ module ClientCode =
 [<JavaScript>]
 module Client =
 
-    let _map : Var<Map<string, ClientCode.A>> = Var.Create <| Map.empty
+    //let _map : Var<Map<string, ClientCode.A>> = Var.Create <| Map.empty
+    //
+    //let initializeMapping() =
+    //    // Here I am hard-coding the mappings of the concrete instances of `ClientCode.A`, entirely in the compiled javascript
+    //    // I need to be able to do this mapping from the server-side.
+    //    Map.empty
+    //    |> Map.add "C" (upcast ClientCode.C() : ClientCode.A)
+    //    |> Map.add "D" (upcast ClientCode.D() : ClientCode.A)
+    //    |> _map.Set
+    //
+    //let getDoc (docName : string) =
+    //    _map.View.Map(fun m -> m.[docName].Doc(m))
+    //    |> Doc.EmbedView
 
-    let initializeMapping() =
-        // Here I am hard-coding the mappings of the concrete instances of `ClientCode.A`, entirely in the compiled javascript
-        // I need to be able to do this mapping from the server-side.
-        Map.empty
-        |> Map.add "C" (upcast ClientCode.C() : ClientCode.A)
-        |> Map.add "D" (upcast ClientCode.D() : ClientCode.A)
-        |> _map.Set
-
-    let getDoc (docName : string) =
-        _map.View.Map(fun m -> m.[docName].Doc(m))
-        |> Doc.EmbedView
-
-    let getDoc2 (m:Map<string, ClientCode.A>) (docName : string) =
-        let m = ClientCode.fixMap m
+    let getDoc2 (m:array<string*ClientCode.A>) (docName : string) =
+        let m = ClientCode.fixMap (m |> Map.ofArray)
         m.[docName].Doc(m)
 

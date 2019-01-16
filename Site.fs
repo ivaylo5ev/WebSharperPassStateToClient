@@ -38,23 +38,24 @@ module Templating =
 module Site =
     open WebSharper.UI.Html
 
-    let mutable _map : Map<string, ClientCode.A> = Map.empty
+    let mutable _map : array<string*ClientCode.A> = Array.empty
 
-    let addMapping<'T> name v = 
-        _map <- _map |> Map.add name v
+    let addMapping<'T> name (v : ClientCode.A) = 
+        _map <- _map |> Array.append [|(name, v)|]
+            //_map |> Map.add name v
 
     addMapping<ClientCode.C> "C" <| ClientCode.C()
     addMapping<ClientCode.D> "D" <| ClientCode.D()
 
-    let HomePage ctx =
+    let HomePage map ctx =
         Templating.Main ctx EndPoint.Home "Home" [
             //div [attr.id "main"; on.afterRender (fun _ -> Client.initializeMapping(); Client.getDoc "C" |> Doc.RunReplaceById "main" )][]
-            div [][ Doc.ClientSide <@ Client.getDoc2 _map "C" @> ]
+            div [][ Doc.ClientSide <@ Client.getDoc2 map "C" @> ]
         ]
 
     [<Website>]
     let Main =
         Application.MultiPage (fun ctx endpoint ->
             match endpoint with
-            | EndPoint.Home -> HomePage ctx
+            | EndPoint.Home -> HomePage _map ctx
         )

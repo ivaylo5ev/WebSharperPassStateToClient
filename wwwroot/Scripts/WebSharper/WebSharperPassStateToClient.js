@@ -1,7 +1,7 @@
 (function()
 {
  "use strict";
- var Global,WebSharper,Obj,WebSharperPassStateToClient,ClientCode,A,B,C,D,Client,SC$1,Site,IntelliFactory,Runtime,UI,Doc,AttrProxy,View,Collections,FSharpMap,Var$1,Client$1,Templates;
+ var Global,WebSharper,Obj,WebSharperPassStateToClient,ClientCode,A,B,C,D,Client,IntelliFactory,Runtime,UI,Doc,AttrProxy,Collections,FSharpMap,Seq,Map;
  Global=self;
  WebSharper=Global.WebSharper;
  Obj=WebSharper&&WebSharper.Obj;
@@ -12,19 +12,15 @@
  C=ClientCode.C=ClientCode.C||{};
  D=ClientCode.D=ClientCode.D||{};
  Client=WebSharperPassStateToClient.Client=WebSharperPassStateToClient.Client||{};
- SC$1=Global.StartupCode$WebSharperPassStateToClient$Client=Global.StartupCode$WebSharperPassStateToClient$Client||{};
- Site=WebSharperPassStateToClient.Site=WebSharperPassStateToClient.Site||{};
  IntelliFactory=Global.IntelliFactory;
  Runtime=IntelliFactory&&IntelliFactory.Runtime;
  UI=WebSharper&&WebSharper.UI;
  Doc=UI&&UI.Doc;
  AttrProxy=UI&&UI.AttrProxy;
- View=UI&&UI.View;
  Collections=WebSharper&&WebSharper.Collections;
  FSharpMap=Collections&&Collections.FSharpMap;
- Var$1=UI&&UI.Var$1;
- Client$1=UI&&UI.Client;
- Templates=Client$1&&Client$1.Templates;
+ Seq=WebSharper&&WebSharper.Seq;
+ Map=Collections&&Collections.Map;
  A=ClientCode.A=Runtime.Class({},Obj,A);
  A.New=Runtime.Ctor(function()
  {
@@ -55,38 +51,18 @@
  {
   A.New.call(this);
  },D);
- Client.getDoc=function(docName)
+ ClientCode.fixMap=function(m)
  {
-  return Doc.EmbedView(View.Map(function(m)
+  return new FSharpMap.New(Seq.map(function(kvp)
   {
-   return m.get_Item(docName).Doc(m);
-  },Client._map().get_View()));
+   return[kvp.K,ClientCode.fixType(kvp.V)];
+  },m));
  };
- Client.initializeMapping=function()
+ ClientCode.fixType=Global.id;
+ Client.getDoc2=function(m,docName)
  {
-  var a;
-  a=(new FSharpMap.New([])).Add("C",new C.New()).Add("D",new D.New());
-  Client._map().Set(a);
- };
- Client._map=function()
- {
-  SC$1.$cctor();
-  return SC$1._map;
- };
- SC$1.$cctor=function()
- {
-  SC$1.$cctor=Global.ignore;
-  SC$1._map=Var$1.Create$1(new FSharpMap.New([]));
- };
- Site.HomePage$41$49=function()
- {
-  return function()
-  {
-   var a;
-   Client.initializeMapping();
-   a=Client.getDoc("C");
-   Templates.LoadLocalTemplates("");
-   Doc.RunReplaceById("main",a);
-  };
+  var m$1;
+  m$1=ClientCode.fixMap(Map.OfArray(m));
+  return m$1.get_Item(docName).Doc(m$1);
  };
 }());
